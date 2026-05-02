@@ -48,9 +48,9 @@ export default function PublicLayout() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link to="/dashboard" className="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Log in</Link>
-            <Link to="/dashboard" className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
-              Start Free Trial
+            <Link to="/login" className="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Log in</Link>
+            <Link to="/login" className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
+              Access Free Tools
             </Link>
           </div>
         </div>

@@ -26,6 +26,7 @@ const features = [
   { icon: BarChart3, title: 'AI Visibility Score', desc: 'Get a unified metric of your brand\'s authority and presence in the generative AI ecosystem.', tooltip: 'A proprietary score from 0-100 measuring AI presence.' },
   { icon: PenTool, title: 'GEO Content Optimizer', desc: 'Structure your content specifically to be parsed, understood, and cited by LLMs.', tooltip: 'Editor that suggests GEO improvements as you type.' },
   { icon: Database, title: 'AI Knowledge Graph Builder', desc: 'Create structured entity data that helps AI models understand your brand\'s context.', tooltip: 'Generates schema markup optimized for AI ingestion.' },
+  { icon: Globe, title: 'AI Agent API Access', desc: 'Allow your autonomous agents to independently access and act on your GEO data for 24/7 optimization.', tooltip: 'Open terminal for AI agents and automated workflows.' },
   { icon: Users, title: 'Competitor AI Monitoring', desc: 'See which competitors are stealing your share of voice in AI-generated answers.', tooltip: 'Compare your AI visibility against up to 10 competitors.' },
   { icon: Lightbulb, title: 'Content Opportunity Finder', desc: 'Discover unanswered prompts where you can easily establish topical authority.', tooltip: 'Find high-volume prompts with low competition.' },
   { icon: Shield, title: 'AI Brand Authority Builder', desc: 'Identify the exact sources and citations AI models trust for your industry.', tooltip: 'Discover which domains LLMs trust most in your niche.' },
@@ -100,14 +101,14 @@ export default function Home() {
     GEO: {
       heroBadge: 'The Future of Search is Generative',
       heroTitle: <>Rank in <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 glow-text">AI Answers</span>,<br />Not Just Search Results.</>,
-      heroDesc: 'Optimize your brand to be cited, recommended, and referenced by ChatGPT, Google Gemini, and Perplexity AI. Dominate the new era of generative search.',
+      heroDesc: 'Optimize your brand to be cited, recommended, and referenced by ChatGPT, Google Gemini, and Perplexity AI. Completely free, open, and accessible for everyone and AI agents.',
       theme: 'from-purple-600 to-cyan-600',
       shadow: 'shadow-[0_0_30px_rgba(139,92,246,0.5)]'
     },
     SEO: {
       heroBadge: 'Next-Gen Search Optimization',
       heroTitle: <>Dominate <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-blue-400 glow-text">Search Rankings</span>,<br />Drive Organic Growth.</>,
-      heroDesc: 'Advanced technical SEO, keyword tracking, and backlink analysis to secure top positions on Google and traditional search engines.',
+      heroDesc: 'Advanced technical SEO, keyword tracking, and backlink analysis to secure top positions on Google. Now a free public resource for humans and automated agents alike.',
       theme: 'from-emerald-600 to-blue-600',
       shadow: 'shadow-[0_0_30px_rgba(16,185,129,0.5)]'
     }
@@ -142,8 +143,8 @@ export default function Home() {
 
           <div className="flex items-center gap-4">
             <Link to="/dashboard" className="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Log in</Link>
-            <Link to="/dashboard" className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
-              Start Free Trial
+            <Link to="/login" className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
+              Use it Completely Free
             </Link>
           </div>
         </div>
@@ -181,8 +182,8 @@ export default function Home() {
                     {content[mode].heroDesc}
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                    <Link to="/dashboard" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${content[mode].theme} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 ${content[mode].shadow}`}>
-                      Start Free Trial
+                    <Link to="/login" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${content[mode].theme} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 ${content[mode].shadow}`}>
+                      Use it Completely Free
                       <ArrowRight className="w-5 h-5" />
                     </Link>
                     <button className="w-full sm:w-auto px-8 py-4 glass-panel rounded-xl text-white font-semibold hover:bg-white/5 transition-colors flex items-center justify-center gap-2 border border-white/10">
@@ -331,9 +332,9 @@ export default function Home() {
             <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-y-1/2 z-0"></div>
 
             {[
-              { step: '01', title: 'Analyze', desc: 'Enter your domain. We scan millions of AI prompts and search queries to find your current baseline.' },
-              { step: '02', title: 'Optimize', desc: 'Use our AI-driven editor to structure your content perfectly for generative engines and crawlers.' },
-              { step: '03', title: 'Dominate', desc: 'Track your rising visibility score as you become the authoritative source in your industry.' }
+              { step: '01', title: 'Analyze', desc: 'Enter your domain. We scan millions of AI prompts to find your baseline—no credit card required.' },
+              { step: '02', title: 'Optimize', desc: 'Use our free AI-driven editor to structure your content perfectly for generative engines and agents.' },
+              { step: '03', title: 'Dominate', desc: 'Become the authoritative source that AI engines trust and cite across the entire web.' }
             ].map((item, i) => (
               <motion.div 
                 key={i}
@@ -619,45 +620,42 @@ export default function Home() {
       <section id="pricing" className="py-24 bg-black/40 border-y border-white/5">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">Transparent Pricing</h2>
-            <p className="text-xl text-gray-400">Scale your AI visibility with plans built for every stage.</p>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Completely Free. For Everyone.</h2>
+            <p className="text-xl text-gray-400">AnswerRank AI is committed to an open, free, and AI-accessible web.</p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { name: 'Free', price: '$0', prompts: '5', features: ['1 Domain', 'Weekly Report', 'Basic Citations'] },
-              { name: 'Starter', price: '$29', prompts: '50', features: ['1 Domain', 'Citation Tracker', 'GEO Suggestions'] },
-              { name: 'Growth', price: '$79', prompts: '500', popular: true, features: ['3 Domains', 'Content Optimizer', 'Competitor Tracking'] },
-              { name: 'Agency', price: '$199', prompts: 'Unlimited', features: ['Unlimited Domains', 'White Label', 'API Access'] }
-            ].map((plan, i) => (
-              <div key={i} className={`glass-panel p-8 rounded-3xl relative flex flex-col ${plan.popular ? `border-${mode === 'GEO' ? 'purple' : 'emerald'}-500/50 shadow-[0_0_30px_rgba(${mode === 'GEO' ? '139,92,246' : '16,185,129'},0.2)] scale-105 z-10` : 'border-white/10'}`}>
-                {plan.popular && (
-                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} rounded-full text-xs font-bold tracking-wide`}>
-                    MOST POPULAR
-                  </div>
-                )}
-                <h3 className="text-xl font-semibold mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  <span className="text-gray-400">/mo</span>
-                </div>
-                <ul className="space-y-4 mb-8 flex-1">
-                  <li className="flex items-center gap-3 text-gray-300">
-                    <CheckCircle2 className={`w-5 h-5 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'}`} />
-                    <span>{plan.prompts} Prompts</span>
-                  </li>
-                  {plan.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-3 text-gray-300">
-                      <CheckCircle2 className={`w-5 h-5 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'}`} />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link to="/dashboard" className={`w-full py-3 rounded-xl font-semibold flex items-center justify-center transition-colors ${plan.popular ? `bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} text-white hover:opacity-90` : 'bg-white/10 text-white hover:bg-white/20'}`}>
-                  Select Plan
-                </Link>
+          <div className="max-w-xl mx-auto">
+            <div className={`glass-panel p-10 rounded-3xl relative flex flex-col border-${mode === 'GEO' ? 'purple' : 'emerald'}-500/50 shadow-[0_0_30px_rgba(${mode === 'GEO' ? '139,92,246' : '16,185,129'},0.2)] z-10 text-center`}>
+              <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} rounded-full text-xs font-bold tracking-wide`}>
+                FREE FOREVER
               </div>
-            ))}
+              <h3 className="text-2xl font-bold mb-2">Open Public Plan</h3>
+              <div className="flex items-center justify-center gap-1 mb-6">
+                <span className="text-5xl font-black">$0</span>
+                <span className="text-gray-400 text-lg">/forever</span>
+              </div>
+              <ul className="space-y-4 mb-8 text-left max-w-xs mx-auto">
+                <li className="flex items-start gap-3 text-gray-300">
+                  <CheckCircle2 className={`w-5 h-5 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'} mt-0.5`} />
+                  <span>Unlimited Prompt Tracking</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-300">
+                  <CheckCircle2 className={`w-5 h-5 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'} mt-0.5`} />
+                  <span>Full AI Citation Reports</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-300">
+                  <CheckCircle2 className={`w-5 h-5 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'} mt-0.5`} />
+                  <span>AI Agent API Accessibility</span>
+                </li>
+                <li className="flex items-start gap-3 text-gray-300">
+                  <CheckCircle2 className={`w-5 h-5 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'} mt-0.5`} />
+                  <span>No Hidden Charges or Tiers</span>
+                </li>
+              </ul>
+              <Link to="/login" className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center transition-all bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} text-white hover:scale-[1.02]`}>
+                Access Everything Free
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -685,13 +683,10 @@ export default function Home() {
           <h2 className="text-4xl md:text-6xl font-bold mb-8">Start Optimizing for AI Answers Today.</h2>
           <p className="text-xl text-gray-400 mb-10">Join 10,000+ marketers who are already dominating the generative search landscape.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/dashboard" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg`}>
-              Start Free Trial
+            <Link to="/login" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg`}>
+              Use it Completely Free
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <button className="w-full sm:w-auto px-8 py-4 glass-panel rounded-xl text-white font-semibold hover:bg-white/5 transition-colors border border-white/10 text-lg">
-              Book a Demo
-            </button>
           </div>
         </div>
       </section>

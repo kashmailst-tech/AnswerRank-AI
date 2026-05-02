@@ -6,36 +6,37 @@ export default function Api() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">AnswerRank AI API</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">Open AI Agent API</h1>
         <p className="text-xl text-gray-400">
-          Programmatic access to the world's leading Generative Engine Optimization data. Build custom dashboards, integrate GEO insights into your internal systems, and automate your marketing workflows.
+          AnswerRank AI provides a free, unrestricted API designed for both human developers and autonomous AI agents. We believe in building the infrastructure for an open, generative web.
         </p>
       </div>
 
       <div className="grid md:grid-cols-3 gap-8 mb-16">
         <ApiFeature 
           icon={<Database />}
-          title="AI Citation Data"
-          description="Retrieve real-time data on when and where your brand is cited across major LLMs like ChatGPT, Gemini, and Perplexity."
+          title="Free AI Citation Data"
+          description="Retrieve real-time data on brand citations across major LLMs. Completely free for research and commercial use."
         />
         <ApiFeature 
           icon={<Zap />}
-          title="Prompt Ranking Insights"
-          description="Access your prompt visibility scores and track your ranking performance programmatically."
+          title="Agent-Optimized"
+          description="Our endpoints are structured for high readability by LLM-based autonomous agents and automated discovery bots."
         />
         <ApiFeature 
           icon={<Code2 />}
-          title="Competitor Analysis"
-          description="Pull competitor citation data and compare your AI visibility against industry benchmarks directly in your own tools."
+          title="No API Limits"
+          description="We do not impose strict rate limits on public research. Our goal is to enable independent AI agents to optimize the web."
         />
       </div>
 
       <div className="glass-panel p-8 rounded-2xl border border-white/10">
-        <h2 className="text-2xl font-bold mb-6">Quick Start</h2>
+        <h2 className="text-2xl font-bold mb-6">Quick Start for Agents & Developers</h2>
+        <p className="text-gray-400 mb-6 text-sm italic">Note: No credit card or payment setup required. Just generate your free key in the dashboard.</p>
         <pre className="bg-black/50 p-6 rounded-lg overflow-x-auto text-sm font-mono text-gray-300">
           <code>
 {`curl -X GET "https://api.answerrank.ai/v1/citations" \\
-  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Authorization: Bearer YOUR_FREE_KEY" \\
   -H "Content-Type: application/json" \\
   -d '{
     "domain": "yourcompany.com",

@@ -1,68 +1,55 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Pricing() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-12">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6">Transparent Pricing for GEO Success</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">Completely Free. For Everyone.</h1>
         <p className="text-xl text-gray-400">
-          AnswerRank AI is a scalable SaaS solution suitable for startups, marketing teams, and agencies. Monitor and optimize your presence in both AI-generated responses and traditional search engines.
+          AnswerRank AI is a globally accessible, free-of-cost platform for Generative Engine Optimization. We believe in an open web where brands and AI agents can interact seamlessly.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-4 gap-8">
+      <div className="max-w-xl mx-auto mb-20">
         <PricingCard 
-          title="Free"
+          title="Free Forever"
           price="$0"
-          description="Perfect for individuals exploring GEO."
+          description="Full access to all features with no hidden charges. Forever."
           features={[
-            "Track up to 10 prompts",
-            "Monitor 1 website",
-            "Basic AI citation tracking",
-            "Community support"
-          ]}
-        />
-        <PricingCard 
-          title="Starter"
-          price="$49/mo"
-          description="For small teams starting their AI journey."
-          features={[
-            "Track up to 100 prompts",
-            "Monitor 3 websites",
-            "Advanced AI citation tracking",
-            "Basic competitor monitoring",
-            "Email support"
+            "Unlimited Prompt Tracking",
+            "Unlimited Website Monitoring",
+            "Real-time AI Citation Tracking",
+            "Full Competitor AI Monitoring",
+            "AI Agent API Access",
+            "Enterprise-grade Analytics",
+            "Community & AI Assistant Support"
           ]}
           highlighted
         />
-        <PricingCard 
-          title="Growth"
-          price="$149/mo"
-          description="For growing marketing teams."
-          features={[
-            "Track up to 500 prompts",
-            "Monitor 10 websites",
-            "Full AI citation tracking",
-            "Advanced competitor monitoring",
-            "Advanced analytics & reporting",
-            "Priority support"
-          ]}
-        />
-        <PricingCard 
-          title="Agency"
-          price="$499/mo"
-          description="For agencies managing multiple clients."
-          features={[
-            "Track up to 5000 prompts",
-            "Monitor unlimited websites",
-            "White-label reporting",
-            "API access",
-            "Dedicated account manager",
-            "Custom integrations"
-          ]}
-        />
+      </div>
+
+      <div className="glass-panel p-8 rounded-3xl border border-white/10 max-w-4xl mx-auto text-center">
+        <h2 className="text-2xl font-bold mb-4">Designed for AI Agents</h2>
+        <p className="text-gray-400 mb-8 max-w-2xl mx-auto">
+          We've built AnswerRank AI to be fully accessible to autonomous AI agents. Our semantic structure and open API allow agents to independently research GEO trends, optimize content, and track visibility on behalf of their users.
+        </p>
+        <div className="flex flex-wrap justify-center gap-4">
+          <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10 text-sm font-mono flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-purple-400" />
+            <span>Agent-Friendly Schema</span>
+          </div>
+          <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10 text-sm font-mono flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-purple-400" />
+            <span>Open JSON API</span>
+          </div>
+          <div className="px-4 py-2 bg-white/5 rounded-lg border border-white/10 text-sm font-mono flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-purple-400" />
+            <span>No-Barrier Entry</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -89,9 +76,9 @@ function PricingCard({ title, price, description, features, highlighted = false 
         ))}
       </ul>
       
-      <button className={`w-full py-3 rounded-lg font-semibold transition-colors ${highlighted ? 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}>
-        Get Started
-      </button>
+      <Link to="/login" className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center transition-colors ${highlighted ? 'bg-gradient-to-r from-purple-500 to-cyan-500 text-white' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+        Use it Completely Free
+      </Link>
     </motion.div>
   );
 }

@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   MessageSquareQuote, 
@@ -6,11 +6,15 @@ import {
   PenTool, 
   Users, 
   BarChart3, 
-  Settings
+  Settings,
+  LogOut,
+  Gift
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
 import { Logo } from './Logo';
+import { useAuth } from '../contexts/AuthContext';
+import { logout } from '../firebase';
 
 const sidebarLinks = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -24,6 +28,17 @@ const sidebarLinks = [
 
 export default function DashboardLayout() {
   const location = useLocation();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Failed to log out', error);
+    }
+  };
 
   return (
     <div className="flex h-screen bg-[#05050a] text-white overflow-hidden">
@@ -65,15 +80,31 @@ export default function DashboardLayout() {
         </nav>
         
         <div className="p-4 border-t border-white/10">
-          <div className="glass-panel p-4 rounded-xl bg-gradient-to-br from-purple-500/10 to-cyan-500/10 border border-purple-500/20">
-            <h4 className="text-sm font-semibold text-white mb-1">Pro Plan</h4>
-            <p className="text-xs text-gray-400 mb-3">45/500 prompts used</p>
-            <div className="w-full bg-white/10 rounded-full h-1.5 mb-3">
-              <div className="bg-gradient-to-r from-purple-500 to-cyan-500 h-1.5 rounded-full" style={{ width: '9%' }}></div>
+          <div className="mb-4 flex items-center gap-3 px-2">
+            {user?.photoURL ? (
+              <img src={user.photoURL} alt={user.displayName || 'User'} className="w-8 h-8 rounded-full border border-white/10" />
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 font-bold border border-purple-500/10">
+                {user?.email?.charAt(0).toUpperCase() || 'U'}
+              </div>
+            )}
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-white truncate leading-tight">{user?.displayName || 'User'}</p>
+              <p className="text-[10px] text-gray-400 truncate">{user?.email}</p>
             </div>
-            <button className="w-full py-1.5 text-xs font-medium bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
-              Upgrade
+            <button onClick={handleLogout} className="p-1.5 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-colors shrink-0" title="Log out">
+              <LogOut className="w-4 h-4" />
             </button>
+          </div>
+          
+          <div className="glass-panel p-4 rounded-xl bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 border border-emerald-500/20">
+            <div className="flex items-center gap-2 mb-2">
+              <Gift className="w-4 h-4 text-emerald-400" />
+              <h4 className="text-[10px] font-bold text-white uppercase tracking-wider">Free Forever</h4>
+            </div>
+            <p className="text-[10px] text-gray-400 leading-relaxed">
+              Every tool is permanently free and open for agents.
+            </p>
           </div>
         </div>
       </aside>
