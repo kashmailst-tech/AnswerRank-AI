@@ -54,18 +54,17 @@ export default function App() {
             <Route path="/terms" element={<TermsOfService />} />
           </Route>
           <Route element={<ProtectedRoute />}>
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="citations" element={<AICitations />} />
-              <Route path="prompts" element={<PromptTracker />} />
-              <Route path="optimizer" element={<ContentOptimizer />} />
-              <Route path="competitors" element={<Competitors />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="settings" element={<Settings />} />
-              
-              <Route element={<AdminRoute />}>
-                <Route path="admin" element={<Admin />} />
+            <Route element={<AdminRoute />}>
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="citations" element={<AICitations />} />
+                <Route path="prompts" element={<PromptTracker />} />
+                <Route path="optimizer" element={<ContentOptimizer />} />
+                <Route path="competitors" element={<Competitors />} />
+                <Route path="reports" element={<Reports />} />
+                <Route path="settings" element={<Settings />} />
               </Route>
+              <Route path="/admin" element={<Admin />} />
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />

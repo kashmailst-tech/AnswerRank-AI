@@ -18,7 +18,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setIsAdmin(user?.email === 'kashmail.st@gmail.com');
+      setIsAdmin(user?.email?.toLowerCase() === 'kashmail.st@gmail.com');
       setLoading(false);
     });
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Logo } from '../components/Logo';
+import { useAuth } from '../contexts/AuthContext';
 import { 
   BrainCircuit, Search, BarChart3, ArrowRight, CheckCircle2, Zap, 
   MessageSquareQuote, PenTool, Users, Database, Lightbulb, Shield, 
@@ -68,12 +69,18 @@ const caseStudies = [
 ];
 
 export default function Home() {
+  const { isAdmin } = useAuth();
   const [mode, setMode] = useState<'GEO' | 'SEO'>('GEO');
   const [scrolled, setScrolled] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
   const [totalScans, setTotalScans] = useState(1248592);
+  const [totalCitations, setTotalCitations] = useState(482103);
+  const [activeBrands, setActiveBrands] = useState(8421);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -82,6 +89,8 @@ export default function Home() {
     // Simulate real-time scans incrementing
     const interval = setInterval(() => {
       setTotalScans(prev => prev + Math.floor(Math.random() * 3) + 1);
+      if (Math.random() > 0.6) setTotalCitations(prev => prev + 1);
+      if (Math.random() > 0.95) setActiveBrands(prev => prev + 1);
     }, 2000);
 
     return () => {
@@ -97,6 +106,16 @@ export default function Home() {
       setEmail('');
       setTimeout(() => setSubscribed(false), 3000);
     }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery) return;
+    setIsSearching(true);
+    setTimeout(() => {
+      setIsSearching(false);
+      setShowPreview(true);
+    }, 1500);
   };
 
   const nextTestimonial = () => {
@@ -175,9 +194,11 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link to="/dashboard" className="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Access Tools</Link>
-            <Link to="/login" className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
-              Access Free Forever
+            {isAdmin && (
+              <Link to="/dashboard" className="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Access Tools</Link>
+            )}
+            <Link to={isAdmin ? "/dashboard" : "/login"} className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
+              {isAdmin ? "Admin Dashboard" : "Access Free Forever"}
             </Link>
           </div>
         </div>
@@ -204,24 +225,100 @@ export default function Home() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4 }}
                 >
-                  <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm font-medium mb-6 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'}`}>
-                    <Zap className="w-4 h-4 animate-pulse" />
-                    <span>{content[mode].heroBadge}</span>
-                    <span className="mx-2 text-white/20">|</span>
-                    <span className="text-white font-mono flex items-center gap-1.5">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                      {totalScans.toLocaleString()} Global Scans Live
-                    </span>
-                  </div>
+                    <div className={`inline-flex flex-wrap items-center gap-3 px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-sm font-medium mb-6 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'}`}>
+                      <div className="flex items-center gap-2">
+                        <Zap className="w-4 h-4 animate-pulse" />
+                        <span>{content[mode].heroBadge}</span>
+                      </div>
+                      <span className="hidden sm:inline text-white/20">|</span>
+                      <div className="flex items-center gap-4 text-white font-mono text-xs">
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                          {totalScans.toLocaleString()} Scans
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
+                          {totalCitations.toLocaleString()} Citations
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+                          {activeBrands.toLocaleString()} Brands
+                        </span>
+                      </div>
+                    </div>
                   <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
                     {content[mode].heroTitle}
                   </h1>
                   <p className="text-lg lg:text-xl text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                     {content[mode].heroDesc}
                   </p>
+                  
+                  {/* Real-time Search Form */}
+                  <form onSubmit={handleSearch} className="relative max-w-xl mx-auto lg:mx-0 mb-8 p-1.5 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-xl group focus-within:border-white/20 transition-all">
+                    <div className="flex items-center gap-3 px-4 py-2">
+                      <Search className={`w-5 h-5 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'}`} />
+                      <input 
+                        type="text" 
+                        placeholder="Enter your website (e.g., example.com)" 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="flex-1 bg-transparent border-none text-white placeholder-gray-500 focus:ring-0 text-lg outline-none"
+                      />
+                      <button 
+                        type="submit" 
+                        disabled={isSearching}
+                        className={`hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all ${mode === 'GEO' ? 'bg-purple-600 hover:bg-purple-500 shadow-purple-500/25' : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/25'} text-white disabled:opacity-50`}
+                      >
+                        {isSearching ? 'Analyzing...' : `Analyze ${mode}`}
+                      </button>
+                    </div>
+                    <button 
+                      type="submit" 
+                      disabled={isSearching}
+                      className="sm:hidden w-full mt-2 py-3 bg-white text-black rounded-xl font-bold flex items-center justify-center gap-2"
+                    >
+                      {isSearching ? 'Analyzing...' : `Analyze ${mode}`}
+                    </button>
+
+                    {/* Quick Result Preview */}
+                    <AnimatePresence>
+                      {showPreview && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          className="absolute top-full left-0 right-0 mt-4 p-6 glass-panel border border-white/10 rounded-2xl shadow-2xl z-20 text-left"
+                        >
+                          <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center gap-2">
+                              <Globe className="w-5 h-5 text-emerald-400" />
+                              <span className="font-bold text-lg">{searchQuery}</span>
+                            </div>
+                            <div className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest ${mode === 'GEO' ? 'bg-purple-500/10 text-purple-400' : 'bg-emerald-500/10 text-emerald-400'}`}>
+                              Initial Scan Ready
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 mb-6">
+                            <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                              <div className="text-xs text-gray-400 mb-1">AI Visibility</div>
+                              <div className="text-2xl font-bold text-white">42/100</div>
+                            </div>
+                            <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                              <div className="text-xs text-gray-400 mb-1">Citations</div>
+                              <div className="text-2xl font-bold text-white">12 found</div>
+                            </div>
+                          </div>
+                          <Link to={isAdmin ? "/dashboard" : "/login"} className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 bg-gradient-to-r ${content[mode].theme} text-white hover:opacity-90 transition-opacity`}>
+                            {isAdmin ? "Go to Admin Dashboard" : "Get Full Free Report"} <ArrowRight className="w-5 h-5" />
+                          </Link>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </form>
+
                   <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                    <Link to="/login" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${content[mode].theme} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 ${content[mode].shadow}`}>
-                      Access Free Forever
+                    <Link to={isAdmin ? "/dashboard" : "/login"} className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${content[mode].theme} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 ${content[mode].shadow}`}>
+                      {isAdmin ? "Open Admin Dashboard" : "Access Free Forever"}
                       <ArrowRight className="w-5 h-5" />
                     </Link>
                   </div>
@@ -417,8 +514,8 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Link to="/dashboard" className={`inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all shadow-lg ${mode === 'GEO' ? 'bg-purple-600 hover:bg-purple-500 shadow-purple-500/25' : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/25'} text-white`}>
-                  Explore AI Training
+                <Link to={isAdmin ? "/dashboard" : "/login"} className={`inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold transition-all shadow-lg ${mode === 'GEO' ? 'bg-purple-600 hover:bg-purple-500 shadow-purple-500/25' : 'bg-emerald-600 hover:bg-emerald-500 shadow-emerald-500/25'} text-white`}>
+                  {isAdmin ? "Manage AI Training" : "Explore AI Training"}
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
@@ -573,8 +670,8 @@ export default function Home() {
                     <div className="text-sm text-gray-400 uppercase tracking-wider font-semibold">{study.metricLabel}</div>
                   </div>
                   <p className="text-gray-300 leading-relaxed mb-8">{study.description}</p>
-                  <Link to="/dashboard" className="inline-flex items-center gap-2 text-sm font-semibold hover:text-white transition-colors group-hover:gap-3">
-                    Read full case study <ArrowRight className="w-4 h-4" />
+                  <Link to={isAdmin ? "/dashboard" : "/login"} className="inline-flex items-center gap-2 text-sm font-semibold hover:text-white transition-colors group-hover:gap-3">
+                    {isAdmin ? "View Deep Analysis" : "Read full case study"} <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>
               </motion.div>
@@ -686,8 +783,8 @@ export default function Home() {
                   <span>No Hidden Charges or Tiers</span>
                 </li>
               </ul>
-              <Link to="/login" className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center transition-all bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} text-white hover:scale-[1.02]`}>
-                Access Everything Free
+              <Link to={isAdmin ? "/dashboard" : "/login"} className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center transition-all bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} text-white hover:scale-[1.02]`}>
+                {isAdmin ? "Enter Admin Dashboard" : "Access Everything Free"}
               </Link>
             </div>
           </div>
@@ -717,8 +814,8 @@ export default function Home() {
           <h2 className="text-4xl md:text-6xl font-bold mb-8">Start Optimizing for AI Answers Today.</h2>
           <p className="text-xl text-gray-400 mb-10">Join 10,000+ marketers who are already dominating the generative search landscape.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/login" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg`}>
-              Access Everything Free
+            <Link to={isAdmin ? "/dashboard" : "/login"} className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg`}>
+              {isAdmin ? "Go to Dashboard" : "Access Everything Free"}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
