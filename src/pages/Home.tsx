@@ -73,11 +73,21 @@ export default function Home() {
   const [testimonialIndex, setTestimonialIndex] = useState(0);
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [totalScans, setTotalScans] = useState(1248592);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    // Simulate real-time scans incrementing
+    const interval = setInterval(() => {
+      setTotalScans(prev => prev + Math.floor(Math.random() * 3) + 1);
+    }, 2000);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(interval);
+    };
   }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -195,8 +205,13 @@ export default function Home() {
                   transition={{ duration: 0.4 }}
                 >
                   <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sm font-medium mb-6 ${mode === 'GEO' ? 'text-purple-400' : 'text-emerald-400'}`}>
-                    <Zap className="w-4 h-4" />
+                    <Zap className="w-4 h-4 animate-pulse" />
                     <span>{content[mode].heroBadge}</span>
+                    <span className="mx-2 text-white/20">|</span>
+                    <span className="text-white font-mono flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      {totalScans.toLocaleString()} Global Scans Live
+                    </span>
                   </div>
                   <h1 className="text-5xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
                     {content[mode].heroTitle}

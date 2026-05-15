@@ -8,8 +8,7 @@ import {
   BarChart3, 
   Settings,
   LogOut,
-  Gift,
-  ShieldCheck
+  Gift
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { motion } from 'framer-motion';
@@ -29,7 +28,7 @@ const sidebarLinks = [
 
 export default function DashboardLayout() {
   const location = useLocation();
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -40,10 +39,6 @@ export default function DashboardLayout() {
       console.error('Failed to log out', error);
     }
   };
-
-  const finalLinks = isAdmin 
-    ? [...sidebarLinks, { name: 'Admin', href: '/dashboard/admin', icon: ShieldCheck }]
-    : sidebarLinks;
 
   return (
     <div className="flex h-screen bg-[#05050a] text-white overflow-hidden">
@@ -56,7 +51,7 @@ export default function DashboardLayout() {
         </div>
         
         <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
-          {finalLinks.map((link) => {
+          {sidebarLinks.map((link) => {
             const isActive = location.pathname === link.href;
             return (
               <Link
