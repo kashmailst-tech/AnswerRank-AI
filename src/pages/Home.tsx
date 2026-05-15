@@ -97,6 +97,26 @@ export default function Home() {
     setTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AnswerRank AI",
+    "operatingSystem": "Web",
+    "applicationCategory": "MarketingApplication",
+    "description": "The leading platform for Generative Engine Optimization (GEO). Optimize your brand for ChatGPT, Gemini, and Perplexity AI.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "AI Citation Tracking",
+      "Prompt Rank Monitoring",
+      "AI Visibility Score",
+      "GEO Content Optimizer"
+    ]
+  };
+
   const content = {
     GEO: {
       heroBadge: 'The Future of Search is Generative',
@@ -116,6 +136,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#05050a] text-white selection:bg-purple-500/30 font-sans overflow-x-hidden">
+      <script type="application/ld+json">
+        {JSON.stringify(structuredData)}
+      </script>
       {/* Navigation */}
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-[#05050a]/90 backdrop-blur-lg border-b border-white/10 py-3' : 'bg-transparent py-5'}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
@@ -142,9 +165,9 @@ export default function Home() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link to="/dashboard" className="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Log in</Link>
+            <Link to="/dashboard" className="hidden sm:block text-sm font-medium text-gray-300 hover:text-white transition-colors">Access Tools</Link>
             <Link to="/login" className="px-4 py-2 bg-white text-black rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors">
-              Use it Completely Free
+              Access Free Forever
             </Link>
           </div>
         </div>
@@ -183,13 +206,9 @@ export default function Home() {
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                     <Link to="/login" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${content[mode].theme} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 ${content[mode].shadow}`}>
-                      Use it Completely Free
+                      Access Free Forever
                       <ArrowRight className="w-5 h-5" />
                     </Link>
-                    <button className="w-full sm:w-auto px-8 py-4 glass-panel rounded-xl text-white font-semibold hover:bg-white/5 transition-colors flex items-center justify-center gap-2 border border-white/10">
-                      See Live Demo
-                      <PlayCircle className="w-5 h-5" />
-                    </button>
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -684,7 +703,7 @@ export default function Home() {
           <p className="text-xl text-gray-400 mb-10">Join 10,000+ marketers who are already dominating the generative search landscape.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link to="/login" className={`w-full sm:w-auto px-8 py-4 bg-gradient-to-r ${mode === 'GEO' ? 'from-purple-600 to-cyan-600' : 'from-emerald-600 to-blue-600'} rounded-xl text-white font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 text-lg`}>
-              Use it Completely Free
+              Access Everything Free
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

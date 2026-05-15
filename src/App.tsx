@@ -29,6 +29,8 @@ import ContentOptimizer from './pages/ContentOptimizer';
 import Competitors from './pages/Competitors';
 import Reports from './pages/Reports';
 import Settings from './pages/Settings';
+import Admin from './pages/Admin';
+import AdminRoute from './components/AdminRoute';
 
 export default function App() {
   return (
@@ -60,6 +62,10 @@ export default function App() {
               <Route path="competitors" element={<Competitors />} />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
+              
+              <Route element={<AdminRoute />}>
+                <Route path="admin" element={<Admin />} />
+              </Route>
             </Route>
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
